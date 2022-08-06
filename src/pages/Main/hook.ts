@@ -3,53 +3,29 @@ import {
     query,
     onSnapshot,
     where,
-    limit,
     orderBy,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { useNameUser } from "../../hooks/useNameUser";
 import { db } from "./../../firebase";
 import { ITasks } from "./types";
 
 export const useMain = () => {
     const { user, logout } = useAuth();
-    const [name, setName] = useState<any>("");
-    const [tasks, setTasks] = useState<ITasks[]>([])
-
-    useEffect(
-        () => {
-            if (user) {
-                try {
-                    const unsubscribe = onSnapshot(
-                        query(collection(db, "users"),
-                            where("_id", "==", user?.uid), limit(1)),
-                        (snapshot) => {
-                            const result: any = snapshot.docs.map(d => {
-                                return d.data()
-                            })[0];
-                            setName(result.displayName);
-                        }
-                    )
-                    return unsubscribe;
-                }
-                catch (error) {
-                    console.log(`Loading user name error: ${error}`)
-                }
-            }
-
-        },
-        [user]
-    );
+    const { name, setName } = useNameUser();
+    const [tasks, setTasks] = useState<ITasks[]>([]);
+    const [changeName, setChangeName] = useState(false);
 
     useEffect(() => {
         if (user) {
             try {
                 const tasksRef = collection(db, "tasks");
 
-                const q = query(tasksRef, where("userId", "==", user?.uid), orderBy('date','asc'));
+                const q = query(tasksRef, where("userId", "==", user?.uid), orderBy('date', 'asc'));
 
                 const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                    const tasks:ITasks[] = [];
+                    const tasks: ITasks[] = [];
                     querySnapshot.forEach((doc) => tasks.push({
                         _id: doc.id,
                         userId: doc.data().userId,
@@ -74,6 +50,9 @@ export const useMain = () => {
         user,
         logout,
         name,
+        setName,
         tasks,
+        changeName,
+        setChangeName,
     }
 }
