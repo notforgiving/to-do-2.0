@@ -13,3 +13,10 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.update_btn {
+  margin-left: 14px;
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -38,7 +38,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const { user } = await register(email, password);
       await addDoc(collection(db, "users"), {
         _id: user.uid,
-        displayName: name,
+        displayName: name || 'No name',
       });
     } catch (error: any) {
       setError(`Errore registration: ${error}`);

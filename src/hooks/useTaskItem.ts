@@ -14,8 +14,6 @@ export const useTaskItem = (_id: string, isDone: boolean) => {
     };
 
     const updateTaskHandler = async () => {
-        console.log('updateTaskHandler');
-        
         if (user) {
             const docRef = doc(db, "tasks", _id);
             updateDoc(docRef, {
