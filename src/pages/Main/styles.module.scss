@@ -1,0 +1,15 @@
+.tasks {
+  padding: 10px;
+}
+
+.empty {
+  padding: 10px 0;
+  font-size: 20px;
+  color: gray;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
