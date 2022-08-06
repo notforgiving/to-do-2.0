@@ -10,12 +10,12 @@ export const useLogin = () => {
         password: "",
     });
 
-    const { isLoading, login, register, error } = useAuth();
+    const { isLoading, login, register, error, setError } = useAuth();
     return {
         isReg,
         setIsReg,
         userData,
         setUserData,
-        isLoading, login, register, error
+        isLoading, login, register, error, setError
     }
 }

@@ -18,6 +18,7 @@ interface IContext {
   logout: () => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   error: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const AuthContext = createContext<IContext>({} as IContext);
@@ -38,7 +39,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const { user } = await register(email, password);
       await addDoc(collection(db, "users"), {
         _id: user.uid,
-        displayName: name || 'No name',
+        displayName: name || "No name",
       });
     } catch (error: any) {
       setError(`Errore registration: ${error}`);
@@ -84,6 +85,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       logout: logoutHandler,
       register: registrHandler,
       error,
+      setError,
     }),
     [user, isLoading, error]
   );

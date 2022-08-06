@@ -27,6 +27,12 @@ const Login: FC<ILogin> = ({ user }) => {
     setUserData({ name: "", email: "", password: "" });
   };
 
+  const demoAuth = async () => {
+    login("demo@mail.ru", "123456");
+
+    setUserData({ name: "", email: "", password: "" });
+  };
+
   return (
     <>
       <Modal
@@ -83,6 +89,11 @@ const Login: FC<ILogin> = ({ user }) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
+          {!isReg && (
+            <Button variant="link" onClick={demoAuth}>
+              Демо
+            </Button>
+          )}
           <Button variant="light" onClick={() => setIsReg(!isReg)}>
             {" "}
             {isReg ? "Вход" : "Регистрация"}
