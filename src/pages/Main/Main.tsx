@@ -19,7 +19,7 @@ const Main = () => {
             {user && name && (
               <Card.Body className={css.head}>
                 <div className={css.name}>
-                  Добавьте сюда свои задачи, <strong>{name}</strong>
+                  Ваши задачи, <strong>{name}</strong>
                   <FiEdit2
                     size={20}
                     className={css.update_btn}
